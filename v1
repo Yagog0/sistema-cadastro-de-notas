@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Estrutura para cadastrar as matérias e notas
+struct Materia {
+    string nome;
+    float nota1;
+    float nota2;
+    float nota3;
+    float media;   
+};
+
+const int MAX_MATERIA = 12; // número máximo de matérias
+
+// Declaração das funções (corrigido 'void' maiúsculo)
+void Cadastrarmateria(Materia Materias[], int &total);
+void ExibirMaterias(const Materia Materias[], int total);
+void CalcularMedia(Materia &materia);
+
+int main() { // Função principal
+    Materia Materias[MAX_MATERIA]; // Array para armazenar as matérias
+    int totalMaterias = 0; // Contador de matérias cadastradas
+    int opcao; // Opção do menu 
+
+    do {
+        cout << "\nMenu:\n"; 
+        cout << "1. Cadastrar matéria\n";
+        cout << "2. Exibir matérias\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1:
+                Cadastrarmateria(Materias, totalMaterias);
+                break;
+            case 2:
+                ExibirMaterias(Materias, totalMaterias);
+                break;
+            case 3:
+                cout << "Saindo...\n";
+                break;
+            default:
+                cout << "Opção inválida. Tente novamente.\n";
+        }
+    } while (opcao != 3);
+
+    return 0;
+}
+
+// ============================================================================================================== Funções ===========================================================================================
+
+//Cadastrar matéria
+void Cadastrarmateria(Materia Materias[], int &total) {
+    if (total >= MAX_MATERIA) {
+        cout << "Limite de matérias atingido!\n";
+        return;
+    }
+
+    cin.ignore(); // Limpar buffer antes de usar getline
+    cout << "Digite o nome da matéria: ";
+    getline(cin, Materias[total].nome);
+
+    cout << "Digite a nota 1: ";
+    cin >> Materias[total].nota1;
+    cout << "digite o peso da nota 1: ";
+    
+    
+    
+    cout << "Digite a nota 2: ";
+    cin >> Materias[total].nota2;
+    cout << "Digite a nota 3: ";
+    cin >> Materias[total].nota3;
+
+    CalcularMedia(Materias[total]); // Calcula média automaticamente
+    total++; // Incrementa o total de matérias
+}
+
+//Calcular média
+void CalcularMedia(Materia &materia) {
+    materia.media = (materia.nota1 + materia.nota2 + materia.nota3) / 3;
+}
+
+//Exibir matérias
+void ExibirMaterias(const Materia Materias[], int total) {
+    if (total == 0) {
+        cout << "Nenhuma matéria cadastrada.\n";
+        return;
+    }
+
+    cout << "\n=== Lista de Matérias ===\n";
+    for (int i = 0; i < total; i++) {
+        cout << i + 1 << ". " << Materias[i].nome
+             << " - Notas: " << Materias[i].nota1 << ", "
+             << Materias[i].nota2 << ", "
+             << Materias[i].nota3
+             << " | Média: " << Materias[i].media << "\n";
+    }
+}
